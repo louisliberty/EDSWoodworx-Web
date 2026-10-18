@@ -1,5 +1,0 @@
-{%- assign target = variant | default: product.selected_or_first_available_variant -%}
-<span class="price">
-  {%- if product.price_varies and variant == blank -%}From {{ product.price_min | money }}{%- else -%}{{ target.price | money }}{%- endif -%}
-  {%- if target.compare_at_price > target.price -%}<s><span class="visually-hidden">Regular price</span>{{ target.compare_at_price | money }}</s>{%- endif -%}
-</span>

@@ -1,0 +1,18 @@
+---
+title: Search
+description: Search EDS WoodWorx products and pages.
+noindex: true
+search: false
+---
+<div class="page-width page-head">
+  <h1>Search</h1>
+  <form class="search-form" action="/search/" method="get" role="search" data-search-form>
+    <div class="field"><label for="SearchInput" class="visually-hidden">Search products and pages</label><input type="search" id="SearchInput" name="q" placeholder="Search pens, bowls, boards, FAQ…" autocomplete="off"></div>
+    <button type="submit" class="button">Search</button>
+  </form>
+</div>
+<div class="page-width section-pad-bottom">
+  <p role="status" data-search-status></p>
+  <div data-search-results></div>
+  <noscript><p>Search needs JavaScript. You can <a href="/shop/">browse all pieces</a> or read the <a href="/faq/">FAQ</a> instead.</p></noscript>
+</div>

@@ -1,0 +1,11 @@
+{
+  "name": "eds-woodworx",
+  "private": true,
+  "description": "EDS WoodWorx website. Static site with Stripe Payment Links checkout.",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "preview": "node build.mjs && cd dist && python3 -m http.server 8080"
+  },
+  "engines": { "node": ">=18" }
+}

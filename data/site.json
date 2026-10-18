@@ -1,0 +1,41 @@
+{
+  "_readme": "Business details used across the whole site. Change a value here and every page updates on the next deploy. Anything in [BRACKETS] is a placeholder that must be replaced before launch.",
+
+  "name": "EDS WoodWorx",
+  "url": "https://edswoodworx.com",
+  "description": "Hand-turned pens, wooden bowls, and handmade cutting boards, made to order in Ed's workshop.",
+
+  "email": "[BUSINESS EMAIL]",
+  "response_time": "[X] business days",
+  "location": "",
+
+  "lead_time_standard": "[X–Y] business days",
+  "lead_time_custom": "[X–Y] business days",
+  "shipping_note": "Shipping time is separate and is calculated at checkout based on your address and shipping method.",
+
+  "availability_enabled": false,
+  "availability_text": "Accepting [X] made-to-order projects this month.",
+
+  "usa_claim_confirmed": false,
+
+  "announcement_enabled": true,
+  "announcement": "Made to order in Ed's workshop",
+  "announcement_2": "",
+
+  "contact_form_endpoint": "",
+  "form_hidden_fields": {},
+  "custom_requests_enabled": false,
+  "newsletter_form_endpoint": "",
+
+  "social": {
+    "instagram": "",
+    "facebook": "",
+    "pinterest": "",
+    "youtube": ""
+  },
+
+  "custom_budget_ranges": ["Under $[A]", "$[A]–$[B]", "$[B]–$[C]", "Over $[C]"],
+  "share_image": "",
+
+  "policies_last_updated": "[DATE]"
+}

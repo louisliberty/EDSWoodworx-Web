@@ -1,46 +1,32 @@
-# EDS WoodWorx – Shopify Theme
+# EDS WoodWorx
 
-The storefront theme for [edswoodworx.com](https://edswoodworx.com): hand-turned pens, wooden bowls, and handmade cutting boards, made to order in Ed's workshop.
+Website for [edswoodworx.com](https://edswoodworx.com): hand-turned pens, wooden bowls, and handmade cutting boards, made to order in Ed's workshop.
 
-This repository is connected to Shopify through the **Shopify GitHub integration**. Whatever is on the connected branch (`main`) is what the theme shows.
+It's a static site: free hosting, with checkout through Stripe Payment Links and no monthly platform fee. A full Shopify theme for later is saved on the `shopify` branch.
 
-- Push to `main` → Shopify updates the theme within about a minute.
-- Edit in Shopify's theme editor → Shopify commits the change back here automatically. **Pull before editing locally** so you don't overwrite those commits.
+## Where things live
 
-## Repository layout
-
-```
-layout/ config/ locales/ assets/ sections/ snippets/ templates/   ← the theme (Shopify reads these)
-docs/    ← strategy, design system, copy, owner guide, checklists, policy templates
-brand/   ← logo, ring mark, maker's stamp (SVG)
-```
-
-Shopify ignores `docs/`, `brand/`, and these README files.
-
-## What lives here vs. in Shopify admin
-
-| Change | Where |
+| What | File |
 |---|---|
-| Business email, response time, lead times, workshop availability, social links | `config/settings_data.json` (or Theme settings in the editor) |
-| Page copy: homepage, Our Story, Made to Order, FAQ, Contact, Custom Request, Accessibility | `templates/*.json` |
-| Layout, styling, behavior | `sections/`, `snippets/`, `assets/` |
-| Products, prices, photos, collections, menus | Shopify admin (not in this repo) |
-| Shipping, refund, privacy, terms policies | Shopify admin → Settings → Policies (not in this repo) |
-| Order emails, payments, taxes, shipping rates, domain | Shopify admin (not in this repo) |
+| Email, response time, crafting times, availability message, announcement bar, form settings, social links | `data/site.json` |
+| Categories, products, prices, options, Stripe links, photos | `data/products.json` |
+| FAQ questions and answers | `data/faq.json` |
+| Page text (homepage, Our Story, Made to Order, Contact, policies…) | `src/pages/*.html` |
+| Styles and browser script | `assets/site.css`, `assets/site.js` |
+| Product photos | `assets/images/products/<product>/` |
+| Page layout, header, footer, product page structure | `build.mjs` |
+| Logo files | `brand/` |
+| Guides | `docs/01-setup-guide.md`, `docs/02-launch-checklist.md` |
 
-## First-time connection
-
-1. Shopify admin → **Online Store → Themes → Add theme → Connect from GitHub**.
-2. Authorize the Shopify GitHub app for this repository, pick branch `main`.
-3. Preview, then **Publish** once the launch checklist in `docs/07-launch-checklists.md` is done.
-
-Setup details for Ed are in `docs/06-owner-handoff.md`.
-
-## Checking changes
-
-With the [Shopify CLI](https://shopify.dev/docs/api/shopify-cli) installed:
+## Build
 
 ```
-shopify theme check          # lint Liquid and JSON
-shopify theme dev            # live local preview against the store
+node build.mjs        # writes the site to dist/ and lists remaining [PLACEHOLDERS]
+npm run preview       # build, then view at http://localhost:8080
 ```
+
+No packages to install; it needs only Node 18 or newer.
+
+## Hosting
+
+Cloudflare Pages, connected to this repo. Build command `node build.mjs`, output directory `dist`, production branch `main`. Pushing to `main` deploys the site. Setup steps are in `docs/01-setup-guide.md`.

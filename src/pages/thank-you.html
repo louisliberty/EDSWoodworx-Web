@@ -1,0 +1,19 @@
+---
+title: Thank You for Your Order
+description: Your EDS WoodWorx order is in.
+noindex: true
+search: false
+---
+<div class="page-width page-head">
+  <p>{{> mto_badge}}</p>
+  <h1>Thank you. Your order is in.</h1>
+  <p>You’ll get a receipt from Stripe by email in a few minutes. Keep it handy: the receipt number is how Ed finds your order.</p>
+</div>
+<section class="section section--flush-top"><div class="page-width">
+  {{> steps "page"}}
+  <div class="section__foot rte">
+    <p>Ed will start on your piece soon. Please allow approximately <strong>{{site.lead_time_standard}}</strong> for crafting ({{site.lead_time_custom}} with engraving or personalization). He’ll email you with tracking when it ships.</p>
+    <p>Need to change something, like engraving text or the shipping address? <a href="/contact/">Contact Ed</a> as soon as possible, before work begins.</p>
+    <p><a class="button button--secondary" href="/shop/">Back to the shop</a></p>
+  </div>
+</div></section>

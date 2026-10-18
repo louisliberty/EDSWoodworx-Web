@@ -1,0 +1,89 @@
+---
+path: /
+title: EDS WoodWorx – Hand-Turned Pens, Wooden Bowls & Handmade Cutting Boards
+description: Handcrafted wood goods from Ed's workshop. Hand-turned pens, wooden bowls, and handmade cutting boards, made to order and built to be used.
+---
+<section class="hero">
+  <div class="page-width hero__grid">
+    <div>
+      <p class="hero__eyebrow">{{> hero_eyebrow}}</p>
+      <h1 class="hero__title"><span>Pens. Bowls. Boards.</span><span class="hero__title-last">Made by Hand.</span></h1>
+      <p class="hero__body">EDS WoodWorx makes practical, lasting pieces from real wood—created one at a time in Ed’s workshop.</p>
+      <div class="button-row">
+        <a class="button button--large" href="/shop/">Shop the Collection</a>
+        <a class="button button--secondary button--large" href="/made-to-order/">How Made to Order Works</a>
+      </div>
+      <div class="hero__availability">{{> availability}}</div>
+    </div>
+    <div class="hero__media">{{> placeholder "A finished bowl, pen, and board on Ed’s workbench in window light" "portrait"}}</div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="CatHead">
+  <div class="page-width">
+    <div class="section__head"><h2 id="CatHead">Shop by category</h2></div>
+    {{> category_tiles}}
+  </div>
+</section>
+
+<section class="section section--walnut" aria-labelledby="MtoHead">
+  <div class="page-width">
+    <div class="section__head">
+      {{> mto_badge}}
+      <h2 id="MtoHead" class="mto-heading">Made when you order. Built with care.</h2>
+      <p>EDS WoodWorx is a small workshop, not a warehouse. Each order is crafted individually, so the grain, tone, and small details are uniquely yours.</p>
+    </div>
+    {{> steps "home"}}
+    <div class="section__foot">
+      <p>Current crafting time: <strong>{{site.lead_time_standard}}</strong> before shipping.</p>
+      <a class="button button--light" href="/made-to-order/">Learn About Made to Order</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="FeatHead">
+  <div class="page-width">
+    <div class="section__head"><h2 id="FeatHead">From the workshop</h2><p>A few pieces Ed is making now.</p></div>
+    {{> featured_products}}
+    <div class="section__foot"><a class="button button--secondary" href="/shop/">Shop all pieces</a></div>
+  </div>
+</section>
+
+<section class="section section--parchment" aria-labelledby="BenHead">
+  <div class="page-width">
+    <div class="section__head"><h2 id="BenHead">Why EDS WoodWorx</h2></div>
+    <ul class="grid grid--4" role="list">
+      <li class="benefit">{{> icon "hand"}}<h3>Made by hand</h3><p>Every piece is shaped, sanded, finished, and inspected in Ed’s workshop.</p></li>
+      <li class="benefit">{{> icon "grain"}}<h3>Real wood, real character</h3><p>No two pieces share the same grain, color, or figure.</p></li>
+      <li class="benefit">{{> icon "bowl"}}<h3>Made for use</h3><p>Built for writing, serving, cooking, giving, and enjoying.</p></li>
+      <li class="benefit">{{> icon "gift"}}<h3>Thoughtful gifts</h3><p>Personalized options make meaningful gifts for milestones and everyday moments.</p></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="EdHead">
+  <div class="page-width split">
+    <div class="split__media">{{> placeholder "Ed at the lathe, hands and tools in frame" "portrait"}}</div>
+    <div>
+      <h2 id="EdHead">From Ed’s bench to your home.</h2>
+      <div class="rte"><p>After years of [CAREER / BACKGROUND], Ed traded schedules for sawdust and began building useful things from wood. What started with a few pieces in the workshop grew into EDS WoodWorx—a small shop devoted to careful work, honest materials, and objects meant to be used.</p></div>
+      <a class="button button--secondary" href="/our-story/">Meet Ed and the Workshop</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--parchment" aria-labelledby="GiftHead">
+  <div class="page-width split split--reverse">
+    <div class="split__media">{{> placeholder "A wrapped piece with a handwritten gift card" "portrait"}}</div>
+    <div>
+      <h2 id="GiftHead">Built for gifting and everyday use</h2>
+      <div class="rte">
+        <p>A pen for a graduation or a new job. A bowl for a housewarming. A board for the couple who cooks together. Each one is useful from the first day.</p>
+        <p>Add a gift message at checkout and Ed will include it on a card in the box.</p>
+      </div>
+      <a class="button button--secondary" href="/shop/">Shop gifts</a>
+    </div>
+  </div>
+</section>
+
+{{> newsletter}}
