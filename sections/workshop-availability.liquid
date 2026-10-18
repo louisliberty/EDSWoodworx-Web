@@ -1,0 +1,15 @@
+{%- comment -%} Standalone availability strip. Controlled from Theme settings > Workshop & lead times, so it changes everywhere at once. {%- endcomment -%}
+{%- if settings.availability_enabled -%}
+<section class="section--tight" style="padding:var(--s-5) 0">
+  <div class="page-width">
+    <p class="availability-note" style="margin:0">{% render 'icon', name: 'ring-small' %}<span>{{ settings.availability_text }}</span></p>
+  </div>
+</section>
+{%- endif -%}
+{% schema %}
+{
+  "name": "Workshop availability",
+  "settings": [ { "type": "paragraph", "content": "Edit the message and turn it on or off in Theme settings > Workshop & lead times." } ],
+  "presets": [{ "name": "Workshop availability" }]
+}
+{% endschema %}

@@ -1,0 +1,263 @@
+{%- comment -%}
+  Product template for every product type (pens, bowls, boards, and anything added later).
+  Each optional field is switched on per product with metafields, so Ed never sees
+  options that don't apply. See docs/05-implementation-specs.md for the metafield list.
+{%- endcomment -%}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign mf = product.metafields.custom
+  assign engraving_on = false
+  if mf.engraving_enabled.value == true
+    assign engraving_on = true
+  endif
+  assign personal_on = false
+  if mf.personalization_enabled.value == true
+    assign personal_on = true
+  endif
+  assign gift_on = section.settings.gift_message_default
+  if mf.gift_message_enabled.value == false
+    assign gift_on = false
+  elsif mf.gift_message_enabled.value == true
+    assign gift_on = true
+  endif
+  assign show_custom_time = false
+  if engraving_on or personal_on
+    assign show_custom_time = true
+  endif
+  assign one_of_a_kind = false
+  if mf.one_of_a_kind.value == true
+    assign one_of_a_kind = true
+  endif
+  assign engraving_max = mf.engraving_max.value | default: 20
+  assign first_media_id = current_variant.featured_media.id | default: product.media.first.id
+-%}
+
+{% render 'breadcrumbs' %}
+
+<div class="page-width product">
+  {%- comment -%} ---------- Gallery ---------- {%- endcomment -%}
+  <div class="product__media" data-gallery>
+    <div class="gallery__main">
+      {%- if product.media.size > 0 -%}
+        {%- for media in product.media -%}
+          {%- assign is_current = false -%}
+          {%- if media.id == first_media_id -%}{%- assign is_current = true -%}{%- endif -%}
+          <div class="gallery__slide" data-media-id="{{ media.id }}" data-zoom-src="{{ media.preview_image | image_url: width: 2400 }}" {% unless is_current %}hidden{% endunless %}>
+            {%- assign img_alt = media.alt | default: product.title -%}
+            {% render 'responsive-image', image: media.preview_image, sizes: '(min-width: 990px) 55vw, 100vw', eager: forloop.first, ratio: 'square', alt: img_alt %}
+          </div>
+        {%- endfor -%}
+        <button type="button" class="gallery__zoom" data-zoom-open>{% render 'icon', name: 'zoom' %}Zoom</button>
+      {%- else -%}
+        {% render 'placeholder-media', label: 'Main product view on a neutral background', ratio: 'square' %}
+      {%- endif -%}
+    </div>
+
+    {%- if product.media.size > 1 -%}
+      <ul class="gallery__thumbs" aria-label="Product images">
+        {%- for media in product.media -%}
+          <li>
+            <button type="button" class="gallery__thumb" data-media-id="{{ media.id }}" aria-current="{% if media.id == first_media_id %}true{% else %}false{% endif %}">
+              {{ media.preview_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+              <span class="visually-hidden">Show image {{ forloop.index }}{% if media.alt != blank %}: {{ media.alt }}{% endif %}</span>
+            </button>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- elsif product.media.size == 0 -%}
+      <ul class="gallery__thumbs" aria-label="Photo slots to fill">
+        {%- assign slots = 'Grain close-up,In use or in hand,Scale beside a familiar object,Underside or maker’s mark' | split: ',' -%}
+        {%- for s in slots -%}<li>{% render 'placeholder-media', label: s, ratio: 'square' %}</li>{%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    <dialog class="zoom-dialog" aria-label="Zoomed product image">
+      <div class="zoom-dialog__inner">
+        <button type="button" class="button button--light zoom-dialog__close" data-zoom-close>{% render 'icon', name: 'close' %}Close</button>
+        <img src="" alt="" loading="lazy">
+      </div>
+    </dialog>
+  </div>
+
+  {%- comment -%} ---------- Info + buy box ---------- {%- endcomment -%}
+  <div class="product__info">
+    <div class="product__badges">
+      {% render 'mto-badge', product: product %}
+      {%- if one_of_a_kind -%}<span class="mto-badge mto-badge--ready">{% render 'icon', name: 'grain' %}One of a kind</span>{%- endif -%}
+    </div>
+    <h1 class="product__title">{{ product.title }}</h1>
+    <p class="product__price"><span data-product-price>{{ current_variant.price | money }}</span>{% if current_variant.compare_at_price > current_variant.price %} <s>{{ current_variant.compare_at_price | money }}</s>{% endif %}</p>
+    {%- if mf.summary != blank -%}<p class="product__summary">{{ mf.summary.value }}</p>{%- endif -%}
+    {%- if settings.availability_enabled -%}<p class="availability-note">{% render 'icon', name: 'ring-small' %}{{ settings.availability_text }}</p>{%- endif -%}
+
+    {%- assign product_form_id = 'ProductForm-' | append: section.id -%}
+    {%- form 'product', product, id: product_form_id, class: 'product__form', data-product-form: 'true' -%}
+      {% render 'lead-time-note', product: product, show_custom: show_custom_time %}
+
+      <p class="form-status form-status--error" data-form-error role="alert" tabindex="-1" hidden></p>
+
+      <script type="application/json" data-product-json>
+        {
+          "variants": [
+            {%- for v in product.variants -%}
+              { "id": {{ v.id }}, "options": {{ v.options | json }}, "available": {{ v.available | json }}, "price_formatted": {{ v.price | money | json }}, "media_id": {{ v.featured_media.id | default: 'null' }} }{% unless forloop.last %},{% endunless %}
+            {%- endfor -%}
+          ]
+        }
+      </script>
+
+      <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id {% unless product.has_only_default_variant %}disabled{% endunless %}>
+
+      {%- unless product.has_only_default_variant -%}
+        {%- comment -%} No-JS fallback: a plain select of every variant. {%- endcomment -%}
+        <div class="field">
+          <label for="VariantSelect-{{ section.id }}">Choose an option</label>
+          <select id="VariantSelect-{{ section.id }}" name="id" data-variant-fallback>
+            {%- for v in product.variants -%}
+              <option value="{{ v.id }}"{% if v == current_variant %} selected{% endif %}{% unless v.available %} disabled{% endunless %}>{{ v.title }} – {{ v.price | money }}{% unless v.available %} (unavailable){% endunless %}</option>
+            {%- endfor -%}
+          </select>
+        </div>
+
+        {%- for option in product.options_with_values -%}
+          <fieldset class="option-group" data-option-index="{{ forloop.index0 }}" hidden>
+            <legend class="field__label">{{ option.name }}: <span class="visually-hidden">choose one</span></legend>
+            <div class="option-group__values">
+              {%- for value in option.values -%}
+                <label class="option-chip">
+                  <input type="radio" name="option-{{ section.id }}-{{ forloop.parentloop.index0 }}" value="{{ value | escape }}"{% if option.selected_value == value %} checked{% endif %}>
+                  <span>{{ value }}</span>
+                </label>
+              {%- endfor -%}
+            </div>
+          </fieldset>
+        {%- endfor -%}
+      {%- endunless -%}
+
+      {%- if engraving_on or personal_on or gift_on or mf.addon_product != blank -%}
+        <div class="product__extras">
+          {%- if engraving_on -%}
+            <div class="field">
+              <label for="Engraving-{{ section.id }}">Engraving (optional)</label>
+              <span class="field__hint" id="EngravingHint-{{ section.id }}">{{ mf.engraving_help.value | default: 'Up to [MAX] characters. We engrave exactly what you type, so please check spelling and capitalization.' | replace: '[MAX]', engraving_max }}</span>
+              <input type="text" id="Engraving-{{ section.id }}" name="properties[Engraving]" maxlength="{{ engraving_max }}" autocomplete="off" aria-describedby="EngravingHint-{{ section.id }} EngravingCount-{{ section.id }}" data-engraving>
+              <span class="field__count" id="EngravingCount-{{ section.id }}" data-engraving-count aria-live="polite">{{ engraving_max }} of {{ engraving_max }} characters left</span>
+              <p class="field__label" style="margin:var(--s-3) 0 0">Preview</p>
+              <div class="engraving-preview" data-engraving-preview data-empty="Your engraving will appear here" aria-hidden="true">Your engraving will appear here</div>
+            </div>
+          {%- endif -%}
+
+          {%- if personal_on -%}
+            <div class="field">
+              <label for="Personal-{{ section.id }}">Personalization notes (optional)</label>
+              <span class="field__hint" id="PersonalHint-{{ section.id }}">{{ mf.personalization_help.value | default: 'Tell Ed what you have in mind. If something can’t be done, he’ll contact you before starting.' }}</span>
+              <textarea id="Personal-{{ section.id }}" name="properties[Personalization notes]" maxlength="250" rows="3" aria-describedby="PersonalHint-{{ section.id }}"></textarea>
+            </div>
+          {%- endif -%}
+
+          {%- if gift_on -%}
+            <div class="field">
+              <label for="Gift-{{ section.id }}">Gift message (optional)</label>
+              <span class="field__hint" id="GiftHint-{{ section.id }}">Ed includes it on a card in the box.{% if section.settings.gift_price_note %} Prices are not included in the package.{% endif %}</span>
+              <textarea id="Gift-{{ section.id }}" name="properties[Gift message]" maxlength="200" rows="3" aria-describedby="GiftHint-{{ section.id }}"></textarea>
+            </div>
+          {%- endif -%}
+
+          {%- assign addon = mf.addon_product.value -%}
+          {%- if addon and addon.available -%}
+            <label class="checkbox">
+              <input type="checkbox" value="{{ addon.selected_or_first_available_variant.id }}" data-addon>
+              <span>{{ mf.addon_label.value | default: addon.title }} <strong>(+{{ addon.price | money }})</strong></span>
+            </label>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- unless one_of_a_kind -%}
+        <div class="field">
+          <label for="Qty-{{ section.id }}">Quantity</label>
+          <div class="qty" data-qty>
+            <button type="button" data-step="-1"><span aria-hidden="true">−</span><span class="visually-hidden">Decrease quantity</span></button>
+            <input type="number" id="Qty-{{ section.id }}" name="quantity" value="1" min="1" inputmode="numeric">
+            <button type="button" data-step="1"><span aria-hidden="true">+</span><span class="visually-hidden">Increase quantity</span></button>
+          </div>
+        </div>
+      {%- endunless -%}
+
+      <div class="product__buttons">
+        <button type="submit" name="add" class="button button--large button--full" data-add-button {% unless current_variant.available %}disabled{% endunless %}>{% if current_variant.available %}Add to cart{% else %}Not available right now{% endif %}</button>
+        {%- if section.settings.show_buy_now -%}{{ form | payment_button }}{%- endif -%}
+      </div>
+    {%- endform -%}
+
+    <p class="product__help">
+      Questions or a special request? <a href="{{ section.settings.contact_link | default: '/pages/contact' }}">Contact Ed</a>.
+      See <a href="{{ shop.shipping_policy.url | default: '/policies/shipping-policy' }}">shipping</a> and <a href="{{ shop.refund_policy.url | default: '/policies/refund-policy' }}">returns</a>.
+    </p>
+
+    {%- comment -%} ---------- Details accordion ---------- {%- endcomment -%}
+    <div class="accordion">
+      <details open>
+        <summary>Details</summary>
+        <div class="accordion__content">
+          {%- if product.description != blank -%}<div class="rte">{{ product.description }}</div>{%- endif -%}
+          {%- if mf.wood_species != blank or mf.dimensions != blank or mf.weight != blank or mf.hardware != blank -%}
+            <dl class="spec-list">
+              {%- if mf.wood_species != blank -%}<dt>Wood</dt><dd>{{ mf.wood_species.value | newline_to_br }}</dd>{%- endif -%}
+              {%- if mf.dimensions != blank -%}<dt>Size</dt><dd>{{ mf.dimensions.value }}</dd>{%- endif -%}
+              {%- if mf.weight != blank -%}<dt>Approx. weight</dt><dd>{{ mf.weight.value }}</dd>{%- endif -%}
+              {%- if mf.hardware != blank -%}<dt>Hardware</dt><dd>{{ mf.hardware.value | newline_to_br }}</dd>{%- endif -%}
+              {%- if mf.refill != blank -%}<dt>Refill</dt><dd>{{ mf.refill.value }}</dd>{%- endif -%}
+            </dl>
+          {%- endif -%}
+        </div>
+      </details>
+      {%- if mf.finish != blank -%}
+        <details>
+          <summary>Materials &amp; finish</summary>
+          <div class="accordion__content"><p>{{ mf.finish.value | newline_to_br }}</p></div>
+        </details>
+      {%- endif -%}
+      {%- if mf.care != blank -%}
+        <details>
+          <summary>Care</summary>
+          <div class="accordion__content"><p>{{ mf.care.value | newline_to_br }}</p></div>
+        </details>
+      {%- endif -%}
+      <details>
+        <summary>Made to order &amp; shipping</summary>
+        <div class="accordion__content">
+          <p>Crafting time: {{ mf.lead_time.value | default: settings.lead_time_standard }}{% if show_custom_time %} ({{ settings.lead_time_custom }} with engraving or personalization){% endif %}. {{ settings.shipping_time_note }}</p>
+          <p>You'll get an email when your order ships, with tracking. <a href="/pages/made-to-order">How made to order works</a>.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="variation-note">
+      {% render 'icon', name: 'grain' %}
+      <p>{{ section.settings.variation_text }}</p>
+    </div>
+
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when '@app' -%}{% render block %}
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% render 'schema-product', product: product %}
+
+{% schema %}
+{
+  "name": "Product page",
+  "settings": [
+    { "type": "checkbox", "id": "show_buy_now", "label": "Show Buy it now button", "default": false, "info": "Off by default so customers see the cart's made-to-order note before paying." },
+    { "type": "checkbox", "id": "gift_message_default", "label": "Offer a gift message on all products", "default": true, "info": "Turn off for one product with the metafield 'Gift message enabled' = false." },
+    { "type": "checkbox", "id": "gift_price_note", "label": "I confirm packing slips for gift orders hide prices", "default": false, "info": "Leave unchecked until you have confirmed this in Settings > Notifications > Packing slip template." },
+    { "type": "textarea", "id": "variation_text", "label": "Natural variation note", "default": "Each piece is made from real wood, so grain, color, and figure will vary from the photos. That variation is what makes your piece one of a kind." },
+    { "type": "url", "id": "contact_link", "label": "Contact link" }
+  ],
+  "blocks": [ { "type": "@app" } ]
+}
+{% endschema %}

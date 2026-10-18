@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "intro": {
+      "type": "page-intro",
+      "settings": {
+        "heading": "Custom Requests"
+      }
+    },
+    "form": {
+      "type": "custom-request-form",
+      "settings": {}
+    }
+  },
+  "order": [
+    "intro",
+    "form"
+  ]
+}

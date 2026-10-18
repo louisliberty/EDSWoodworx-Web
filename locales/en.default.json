@@ -1,0 +1,18 @@
+{
+  "general": {
+    "made_to_order": "Made to order",
+    "ready_to_ship": "Ready to ship",
+    "unavailable": "Currently unavailable",
+    "one_of_a_kind": "One of a kind"
+  },
+  "products": {
+    "add_to_cart": "Add to cart",
+    "unavailable": "Not available right now",
+    "quantity": "Quantity"
+  },
+  "cart": {
+    "title": "Your cart",
+    "checkout": "Check out",
+    "empty": "Your cart is empty."
+  }
+}

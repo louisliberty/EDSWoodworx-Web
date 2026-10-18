@@ -1,0 +1,22 @@
+{%- comment -%}
+  Organization schema (homepage only). Email appears only once the placeholder is replaced.
+  LocalBusiness schema is intentionally NOT used: it requires a public address, and a home workshop
+  usually should not publish one. Switch only if Ed opens a public storefront.
+{%- endcomment -%}
+{%- capture same_as -%}
+  {%- assign social_keys = 'social_instagram,social_facebook,social_pinterest,social_youtube' | split: ',' -%}
+  {%- for key in social_keys -%}
+    {%- if settings[key] != blank -%}{{ settings[key] | json }},{%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": {{ shop.name | json }},
+  "url": {{ request.origin | json }}
+  {%- if settings.logo -%}, "logo": {{ settings.logo | image_url: width: 600 | prepend: 'https:' | json }}{%- endif -%}
+  {%- unless settings.business_email contains '[' or settings.business_email == blank -%}, "email": {{ settings.business_email | json }}{%- endunless -%}
+  {%- if same_as != blank -%}, "sameAs": [{{ same_as | remove_last: ',' }}]{%- endif -%}
+}
+</script>

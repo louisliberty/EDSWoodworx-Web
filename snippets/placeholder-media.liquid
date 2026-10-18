@@ -1,0 +1,4 @@
+{%- comment -%} Labeled photo slot shown until Ed uploads real photography. Usage: {% render 'placeholder-media', label: 'Ed at the lathe', ratio: 'portrait' %} {%- endcomment -%}
+<div class="media media--{{ ratio | default: 'square' }} placeholder" role="img" aria-label="Photo coming soon: {{ label | escape }}">
+  <span>Photo: {{ label }}</span>
+</div>

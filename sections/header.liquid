@@ -1,0 +1,72 @@
+{%- assign menu = section.settings.menu -%}
+<header class="site-header">
+  <div class="page-width site-header__inner">
+    <button class="icon-link menu-toggle" type="button" data-toggle aria-expanded="false" aria-controls="MobileNav">
+      {% render 'icon', name: 'menu' %}<span class="visually-hidden">Menu</span>
+    </button>
+
+    <a class="site-header__logo" href="{{ routes.root_url }}">
+      {% render 'wordmark' %}<span class="visually-hidden"> home</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        {%- for link in linklists[menu].links -%}
+          <li><a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <div class="header-icons">
+      <button class="icon-link" type="button" data-toggle aria-expanded="false" aria-controls="HeaderSearch">
+        {% render 'icon', name: 'search' %}<span class="visually-hidden">Search</span>
+      </button>
+      {%- if shop.customer_accounts_enabled -%}
+        <a class="icon-link" href="{{ routes.account_url }}">{% render 'icon', name: 'account' %}<span class="visually-hidden">{% if customer %}Your account{% else %}Sign in{% endif %}</span></a>
+      {%- endif -%}
+      <a class="icon-link" href="{{ routes.cart_url }}">
+        {% render 'icon', name: 'cart' %}
+        <span class="visually-hidden">Cart, {{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }}</span>
+        {%- if cart.item_count > 0 -%}<span class="cart-count" aria-hidden="true">{{ cart.item_count }}</span>{%- endif -%}
+      </a>
+    </div>
+  </div>
+
+  <div class="search-bar" id="HeaderSearch" hidden>
+    <div class="page-width">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
+        <input type="hidden" name="type" value="product,page,article">
+        <input type="hidden" name="options[prefix]" value="last">
+        <div class="field">
+          <label class="visually-hidden" for="HeaderSearchInput">Search products and pages</label>
+          <input type="search" id="HeaderSearchInput" name="q" placeholder="Search pens, bowls, boards, FAQ…" autocomplete="off">
+        </div>
+        <button class="button" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <nav class="mobile-nav" id="MobileNav" aria-label="Main" hidden>
+    <ul>
+      {%- for link in linklists[menu].links -%}
+        <li><a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a></li>
+      {%- endfor -%}
+    </ul>
+    {%- if section.settings.secondary_menu != blank -%}
+      <ul class="mobile-nav__secondary">
+        {%- for link in linklists[section.settings.secondary_menu].links -%}
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </nav>
+</header>
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Main menu", "default": "main-menu", "info": "Shop, Pens, Bowls, Cutting Boards, Our Story, Made to Order, FAQ, Contact" },
+    { "type": "link_list", "id": "secondary_menu", "label": "Extra links in mobile menu", "info": "Suggested: Shipping & Returns, Contact" }
+  ]
+}
+{% endschema %}

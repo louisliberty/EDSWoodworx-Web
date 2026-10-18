@@ -1,0 +1,101 @@
+{%- comment -%}
+  Custom request / commission form. Sends through Shopify's contact form (arrives in Ed's inbox).
+  Turn it on in Theme settings > Contact & requests. No quote is generated automatically.
+{%- endcomment -%}
+<div class="page-width" style="padding-bottom:var(--s-8)">
+  {%- if settings.custom_requests_enabled -%}
+    <div class="rte" style="margin-bottom:var(--s-6)">{{ section.settings.intro }}</div>
+    {%- assign cr_id = 'CustomForm-' | append: section.id -%}
+    {%- form 'contact', id: cr_id, class: 'form-narrow', data-validate: 'true' -%}
+      <input type="hidden" name="contact[Topic]" value="Custom request">
+      {%- if form.posted_successfully? -%}
+        <div class="form-status form-status--success" role="status" tabindex="-1" autofocus>
+          <p style="margin:0"><strong>Request sent.</strong> Ed will review it and reply within {{ settings.response_time }}. Nothing is started or charged until you both agree on the details.</p>
+        </div>
+      {%- endif -%}
+      {%- if form.errors -%}
+        <div class="form-status form-status--error" role="alert" tabindex="-1" autofocus><p style="margin:0"><strong>Your request wasn't sent.</strong> Check the fields marked below.</p></div>
+      {%- endif -%}
+      <div class="form-status form-status--error" data-error-summary tabindex="-1" role="alert" hidden></div>
+      <p class="field__hint">Fields marked <span class="required" aria-hidden="true">*</span><span class="visually-hidden">with an asterisk</span> are required.</p>
+
+      <div class="field">
+        <label for="{{ cr_id }}-name">Name <span class="required" aria-hidden="true">*</span></label>
+        <input type="text" id="{{ cr_id }}-name" name="contact[name]" autocomplete="name" required>
+        <p class="field__error" id="{{ cr_id }}-name-error" hidden>{% render 'icon', name: 'alert' %}<span></span></p>
+      </div>
+      <div class="field">
+        <label for="{{ cr_id }}-email">Email <span class="required" aria-hidden="true">*</span></label>
+        <input type="email" id="{{ cr_id }}-email" name="contact[email]" autocomplete="email" required>
+        <p class="field__error" id="{{ cr_id }}-email-error" hidden>{% render 'icon', name: 'alert' %}<span></span></p>
+      </div>
+      <div class="field">
+        <label for="{{ cr_id }}-type">Project type <span class="required" aria-hidden="true">*</span></label>
+        <select id="{{ cr_id }}-type" name="contact[Project type]" required>
+          <option value="">Choose one</option>
+          {%- assign types = section.settings.project_types | split: ',' -%}
+          {%- for t in types -%}<option>{{ t | strip }}</option>{%- endfor -%}
+        </select>
+        <p class="field__error" id="{{ cr_id }}-type-error" hidden>{% render 'icon', name: 'alert' %}<span></span></p>
+      </div>
+      <div class="field">
+        <label for="{{ cr_id }}-use">How will it be used? <span class="required" aria-hidden="true">*</span></label>
+        <span class="field__hint">For example: a retirement gift, everyday kitchen use, a wedding table.</span>
+        <textarea id="{{ cr_id }}-use" name="contact[Intended use]" rows="3" required></textarea>
+        <p class="field__error" id="{{ cr_id }}-use-error" hidden>{% render 'icon', name: 'alert' %}<span></span></p>
+      </div>
+      <div class="field">
+        <label for="{{ cr_id }}-size">Preferred size (optional)</label>
+        <span class="field__hint">Approximate is fine, for example 12 × 18 inches.</span>
+        <input type="text" id="{{ cr_id }}-size" name="contact[Preferred dimensions]">
+      </div>
+      <div class="field">
+        <label for="{{ cr_id }}-wood">Preferred wood (optional)</label>
+        <span class="field__hint">Not sure? Leave blank and Ed will suggest options.</span>
+        <input type="text" id="{{ cr_id }}-wood" name="contact[Preferred wood]">
+      </div>
+      <div class="field">
+        <label for="{{ cr_id }}-budget">Budget range <span class="required" aria-hidden="true">*</span></label>
+        <select id="{{ cr_id }}-budget" name="contact[Budget range]" required>
+          <option value="">Choose one</option>
+          {%- assign budgets = section.settings.budget_ranges | split: ',' -%}
+          {%- for b in budgets -%}<option>{{ b | strip }}</option>{%- endfor -%}
+          <option>Not sure yet</option>
+        </select>
+        <p class="field__error" id="{{ cr_id }}-budget-error" hidden>{% render 'icon', name: 'alert' %}<span></span></p>
+      </div>
+      <div class="field">
+        <label for="{{ cr_id }}-date">Date you'd like it by (optional)</label>
+        <span class="field__hint">Custom work takes about {{ settings.lead_time_custom }} plus shipping. Ed will tell you if your date is realistic.</span>
+        <input type="date" id="{{ cr_id }}-date" name="contact[Desired date]">
+      </div>
+      <div class="field">
+        <label for="{{ cr_id }}-notes">Personalization or other details (optional)</label>
+        <textarea id="{{ cr_id }}-notes" name="contact[body]" rows="4"></textarea>
+      </div>
+      <div class="field">
+        <p class="field__label">Reference photos</p>
+        <p class="field__hint" style="margin:0">Have a sketch or a photo of something you like? After you send this form, reply to Ed's email response and attach it.</p>
+      </div>
+      <p>Sending this form is a request, not an order. Ed will review it and reply before any work begins or any payment is taken.</p>
+      <button type="submit" class="button button--large">Send request</button>
+    {%- endform -%}
+  {%- else -%}
+    <div class="lead-time" style="max-width:44rem">
+      {% render 'icon', name: 'info' %}
+      <div><p><strong>Custom requests are paused right now.</strong> Ed is focused on current orders. You can still <a href="/pages/contact">send a question</a> or browse <a href="{{ routes.all_products_collection_url }}">made-to-order pieces</a>.</p></div>
+    </div>
+  {%- endif -%}
+</div>
+{% schema %}
+{
+  "name": "Custom request form",
+  "settings": [
+    { "type": "paragraph", "content": "Turn the form on or off in Theme settings > Contact & requests." },
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>Ed takes on a small number of custom pieces when the workshop schedule allows. Not every request is a fit, and availability is limited. Tell him what you have in mind, and he'll reply with honest thoughts, rough timing, and a price before anything starts.</p>" },
+    { "type": "text", "id": "project_types", "label": "Project types (comma separated)", "default": "Pen, Bowl, Cutting board, Serving board, Something else" },
+    { "type": "text", "id": "budget_ranges", "label": "Budget ranges (comma separated)", "default": "Under $[A], $[A]–$[B], $[B]–$[C], Over $[C]", "info": "Replace the [A] [B] [C] placeholders with real numbers before turning the form on." }
+  ],
+  "presets": [{ "name": "Custom request form" }]
+}
+{% endschema %}

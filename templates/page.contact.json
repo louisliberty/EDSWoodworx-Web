@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "intro": {
+      "type": "page-intro",
+      "settings": {
+        "heading": "Contact Ed",
+        "intro": "Questions about a piece, an order, or an idea for something special? Send a message and Ed will get back to you."
+      }
+    },
+    "form": {
+      "type": "contact-form",
+      "settings": {}
+    }
+  },
+  "order": [
+    "intro",
+    "form"
+  ]
+}

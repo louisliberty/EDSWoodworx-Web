@@ -1,0 +1,7 @@
+{%- comment -%} Text-first wordmark with the ring maker's mark. Real text, so it is readable by screen readers and search engines. {%- endcomment -%}
+{%- if settings.logo != blank -%}
+  {{ settings.logo | image_url: width: 520 | image_tag: width: settings.logo_width, height: null, alt: shop.name, loading: 'eager', style: 'height:auto' }}
+{%- else -%}
+  {% render 'icon', name: 'ring' %}
+  <span class="wordmark"><span class="wordmark__eds">EDS</span> WoodWorx</span>
+{%- endif -%}

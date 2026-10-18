@@ -1,0 +1,101 @@
+{
+  "sections": {
+    "intro": {
+      "type": "page-intro",
+      "settings": {
+        "heading": "Made to Order",
+        "intro": "Every EDS WoodWorx piece is made after you order it. Here’s what that means, how long it takes, and what to expect."
+      }
+    },
+    "what": {
+      "type": "rich-text",
+      "settings": {
+        "heading": "What “made to order” means",
+        "text": "<p>When you place an order, Ed selects the wood and makes your piece by hand: turning or cutting, shaping, sanding, finishing, and a final check. Nothing comes from a warehouse shelf. Your piece is made for you.</p>"
+      }
+    },
+    "why": {
+      "type": "rich-text",
+      "settings": {
+        "heading": "Why it takes a little longer",
+        "parchment": true,
+        "text": "<p>Mass-produced goods are made ahead and stored. Handwork happens one piece at a time, and some steps can’t be rushed, like letting a finish dry properly before a piece is packed. The wait is part of getting something made with care.</p>"
+      }
+    },
+    "steps": {
+      "type": "process-steps",
+      "settings": {
+        "heading": "Choose → Crafted → Shipped",
+        "text": "Three steps from your order to your door."
+      },
+      "blocks": {
+        "b0": {
+          "type": "step",
+          "settings": {
+            "title": "Choose",
+            "text": "Pick your piece and any options. You’ll get an order confirmation email right away."
+          }
+        },
+        "b1": {
+          "type": "step",
+          "settings": {
+            "title": "Crafted",
+            "text": "Ed makes your piece in the workshop. Engraved or personalized pieces take a little longer."
+          }
+        },
+        "b2": {
+          "type": "step",
+          "settings": {
+            "title": "Shipped",
+            "text": "Ed packs it carefully and ships it. You’ll get an email with tracking when it leaves the shop."
+          }
+        }
+      },
+      "block_order": [
+        "b0",
+        "b1",
+        "b2"
+      ]
+    },
+    "updates": {
+      "type": "rich-text",
+      "settings": {
+        "heading": "Order and shipping updates",
+        "text": "<p>You’ll receive an email when you order and another when your piece ships, with a tracking link. If anything affects your timing, Ed will email you directly. You can also <a href=\"/pages/contact\">contact Ed</a> anytime with your order number.</p>"
+      }
+    },
+    "unique": {
+      "type": "rich-text",
+      "settings": {
+        "heading": "Every piece is a little different",
+        "parchment": true,
+        "text": "<p>Real wood varies. The grain, color, and figure of your piece will differ from the photos, and that’s what makes it yours. Product photos show the style, shape, and finish you can expect.</p>"
+      }
+    },
+    "custom": {
+      "type": "rich-text",
+      "settings": {
+        "heading": "What can be customized",
+        "text": "<p>Options vary by product and are shown on each product page. In general:</p><ul><li><strong>Usually available:</strong> [EDIT LIST: e.g., size, wood species where listed, engraving on pens and boards, gift messages].</li><li><strong>Usually not available:</strong> [EDIT LIST: e.g., matching a specific grain pattern exactly, rush orders, designs outside the shop’s usual work].</li></ul><p>Have an idea that isn’t listed? <a href=\"/pages/contact\">Ask Ed</a>. He can’t accept every request, but he’ll give you a straight answer.</p>"
+      }
+    },
+    "links": {
+      "type": "rich-text",
+      "settings": {
+        "heading": "More details",
+        "compact": true,
+        "text": "<p><a href=\"/policies/shipping-policy\">Shipping policy</a> · <a href=\"/policies/refund-policy\">Returns and refunds</a> · <a href=\"/pages/faq\">FAQ</a></p>"
+      }
+    }
+  },
+  "order": [
+    "intro",
+    "what",
+    "why",
+    "steps",
+    "updates",
+    "unique",
+    "custom",
+    "links"
+  ]
+}

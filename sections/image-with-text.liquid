@@ -1,0 +1,37 @@
+{%- comment -%} Used for "About Ed", "Why Wood?", "The Mark of Handmade", gifting, and similar story blocks. {%- endcomment -%}
+<section class="section{% if section.settings.background == 'parchment' %} section--parchment{% elsif section.settings.background == 'walnut' %} section--walnut{% endif %}" aria-labelledby="IwtHead-{{ section.id }}">
+  <div class="page-width split{% if section.settings.reverse %} split--reverse{% endif %}">
+    <div class="split__media">
+      {%- if section.settings.image -%}
+        {% render 'responsive-image', image: section.settings.image, sizes: '(min-width: 900px) 50vw, 100vw', ratio: 'portrait' %}
+      {%- else -%}
+        {% render 'placeholder-media', label: section.settings.placeholder_label, ratio: 'portrait' %}
+      {%- endif -%}
+    </div>
+    <div>
+      <h2 id="IwtHead-{{ section.id }}">{{ section.settings.heading }}</h2>
+      <div class="rte">{{ section.settings.text }}</div>
+      {%- if section.settings.owner_note != blank -%}<p class="placeholder-note">{{ section.settings.owner_note }}</p>{%- endif -%}
+      {%- if section.settings.cta_label != blank -%}
+        <a class="button{% if section.settings.background == 'walnut' %} button--light{% else %} button--secondary{% endif %}" href="{{ section.settings.cta_link }}">{{ section.settings.cta_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Image with text",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "placeholder_label", "label": "Photo placeholder label", "default": "Workshop photo" },
+    { "type": "checkbox", "id": "reverse", "label": "Image on the right", "default": false },
+    { "type": "select", "id": "background", "label": "Background", "default": "cream", "options": [ { "value": "cream", "label": "Cream" }, { "value": "parchment", "label": "Parchment" }, { "value": "walnut", "label": "Walnut" } ] },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Heading" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Text</p>" },
+    { "type": "text", "id": "owner_note", "label": "Small note under text (optional)", "info": "Use for reminders like 'Story is a placeholder'. Clear before launch." },
+    { "type": "text", "id": "cta_label", "label": "Button" },
+    { "type": "url", "id": "cta_link", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Image with text" }]
+}
+{% endschema %}

@@ -1,0 +1,74 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#3A281C">
+    <link rel="canonical" href="{{ canonical_url }}">
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64, height: 64 }}">
+    {%- endif -%}
+
+    {%- capture seo_title -%}
+      {%- if request.page_type == 'search' and search.terms != blank -%}
+        Search: {{ search.terms }}
+      {%- else -%}
+        {{ page_title }}
+      {%- endif -%}
+      {%- if current_tags %} – tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} – Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} | {{ shop.name }}{% endunless -%}
+    {%- endcapture -%}
+    <title>{{ seo_title | strip }}</title>
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    {% render 'meta-tags' %}
+
+    {%- comment -%} Fonts come from Shopify's font library (served from Shopify's CDN with font-display: swap). {%- endcomment -%}
+    {%- assign heading_font = settings.type_heading_font -%}
+    {%- assign body_font = settings.type_body_font -%}
+    {%- assign heading_semibold = heading_font | font_modify: 'weight', '600' -%}
+    {%- assign heading_italic = heading_font | font_modify: 'style', 'italic' -%}
+    {%- assign body_bold = body_font | font_modify: 'weight', '700' -%}
+    {{ body_font | font_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: true }}
+    {{ heading_font | font_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: true }}
+    <style>
+      {{ heading_font | font_face: font_display: 'swap' }}
+      {%- if heading_semibold %}{{ heading_semibold | font_face: font_display: 'swap' }}{% endif -%}
+      {%- if heading_italic %}{{ heading_italic | font_face: font_display: 'swap' }}{% endif -%}
+      {{ body_font | font_face: font_display: 'swap' }}
+      {%- if body_bold %}{{ body_bold | font_face: font_display: 'swap' }}{% endif -%}
+      :root {
+        --font-heading: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+        --font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
+      }
+    </style>
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+    <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+
+    {{ content_for_header }}
+
+    {%- if request.page_type == 'index' -%}
+      {% render 'schema-organization' %}
+    {%- endif -%}
+  </head>
+
+  <body class="template-{{ request.page_type | handle }}">
+    <a class="skip-link" href="#MainContent">Skip to main content</a>
+
+    {% section 'announcement-bar' %}
+    {% section 'header' %}
+
+    <main id="MainContent" class="main" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% section 'footer' %}
+
+    <div class="visually-hidden" aria-live="polite" aria-atomic="true" id="LiveRegion"></div>
+  </body>
+</html>

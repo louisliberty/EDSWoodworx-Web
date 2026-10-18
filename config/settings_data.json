@@ -1,0 +1,19 @@
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "lead_time_standard": "[X–Y] business days",
+      "lead_time_custom": "[X–Y] business days",
+      "availability_enabled": false,
+      "availability_text": "Accepting [X] made-to-order projects this month.",
+      "usa_claim_confirmed": false,
+      "business_email": "[BUSINESS EMAIL]",
+      "response_time": "[X] business days",
+      "custom_requests_enabled": false,
+      "logo_width": 180,
+      "type_heading_font": "lora_n4",
+      "type_body_font": "assistant_n4",
+      "cart_gift_note": true
+    }
+  }
+}

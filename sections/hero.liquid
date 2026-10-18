@@ -1,0 +1,45 @@
+{%- comment -%} Homepage hero. The only H1 on the homepage. {%- endcomment -%}
+<section class="hero">
+  <div class="page-width hero__grid">
+    <div>
+      <p class="hero__eyebrow">{% if settings.usa_claim_confirmed %}{{ section.settings.eyebrow }}{% else %}{{ section.settings.eyebrow_fallback }}{% endif %}</p>
+      <h1 class="hero__title">
+        <span>{{ section.settings.heading_1 }}</span>
+        <span class="hero__title-last">{{ section.settings.heading_2 }}</span>
+      </h1>
+      <p class="hero__body">{{ section.settings.body }}</p>
+      <div class="button-row">
+        {%- if section.settings.cta_1_label != blank -%}<a class="button button--large" href="{{ section.settings.cta_1_link | default: routes.all_products_collection_url }}">{{ section.settings.cta_1_label }}</a>{%- endif -%}
+        {%- if section.settings.cta_2_label != blank -%}<a class="button button--secondary button--large" href="{{ section.settings.cta_2_link | default: '/pages/made-to-order' }}">{{ section.settings.cta_2_label }}</a>{%- endif -%}
+      </div>
+      {%- if settings.availability_enabled -%}
+        <p class="hero__availability availability-note">{% render 'icon', name: 'ring-small' %}{{ settings.availability_text }}</p>
+      {%- endif -%}
+    </div>
+    <div class="hero__media">
+      {%- if section.settings.image -%}
+        {% render 'responsive-image', image: section.settings.image, sizes: '(min-width: 900px) 48vw, 100vw', eager: true, ratio: 'portrait' %}
+      {%- else -%}
+        {% render 'placeholder-media', label: 'A finished bowl, pen, and board on Ed’s workbench in window light', ratio: 'portrait' %}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Small line above headline", "default": "Handcrafted in America", "info": "Shown only when 'I confirm pieces are made in the United States' is checked in Theme settings > Workshop & lead times." },
+    { "type": "text", "id": "eyebrow_fallback", "label": "Small line (before USA claim is confirmed)", "default": "Handcrafted in Ed’s workshop" },
+    { "type": "text", "id": "heading_1", "label": "Headline, line 1", "default": "Pens. Bowls. Boards." },
+    { "type": "text", "id": "heading_2", "label": "Headline, line 2", "default": "Made by Hand." },
+    { "type": "textarea", "id": "body", "label": "Text", "default": "EDS WoodWorx makes practical, lasting pieces from real wood—created one at a time in Ed’s workshop." },
+    { "type": "image_picker", "id": "image", "label": "Image", "info": "Portrait, at least 1600 px wide. Real product on the bench, natural light. Add alt text in Content > Files." },
+    { "type": "text", "id": "cta_1_label", "label": "Main button", "default": "Shop the Collection" },
+    { "type": "url", "id": "cta_1_link", "label": "Main button link" },
+    { "type": "text", "id": "cta_2_label", "label": "Second button", "default": "How Made to Order Works" },
+    { "type": "url", "id": "cta_2_link", "label": "Second button link" }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}

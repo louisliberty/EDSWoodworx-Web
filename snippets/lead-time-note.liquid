@@ -1,0 +1,30 @@
+{%- comment -%}
+  Lead-time message. Priority: product metafield custom.lead_time > theme setting.
+  Usage: {% render 'lead-time-note', product: product %} or {% render 'lead-time-note', context: 'cart' %}
+{%- endcomment -%}
+{%- assign lead = settings.lead_time_standard -%}
+{%- if product and product.metafields.custom.lead_time != blank -%}
+  {%- assign lead = product.metafields.custom.lead_time.value -%}
+{%- endif -%}
+{%- if product and product.metafields.custom.ready_to_ship.value == true -%}
+  <div class="lead-time">
+    {% render 'icon', name: 'check' %}
+    <div>
+      <p><strong>Ready to ship.</strong> This piece is finished and ships after your order is packed.</p>
+      <p>{{ settings.shipping_time_note }}</p>
+    </div>
+  </div>
+{%- else -%}
+  <div class="lead-time">
+    {% render 'icon', name: 'clock' %}
+    <div>
+      {%- if context == 'cart' -%}
+        <p><strong>Made to order.</strong> Pieces in your cart are made after you order. Please allow approximately {{ lead }} for crafting before shipment{% if settings.lead_time_custom != settings.lead_time_standard %}, or {{ settings.lead_time_custom }} for engraved or personalized pieces{% endif %}.</p>
+      {%- else -%}
+        <p><strong>Made to order.</strong> {{ settings.mto_short_note | default: 'This piece is made after you order it. Please allow approximately [LEAD_TIME] for crafting before shipment.' | replace: '[LEAD_TIME]', lead }}</p>
+        {%- if show_custom -%}<p>With engraving or personalization, allow {{ settings.lead_time_custom }}.</p>{%- endif -%}
+      {%- endif -%}
+      <p>{{ settings.shipping_time_note }}</p>
+    </div>
+  </div>
+{%- endif -%}
