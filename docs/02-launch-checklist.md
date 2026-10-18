@@ -22,7 +22,9 @@ Run `node build.mjs`. It lists every page that still has a `[PLACEHOLDER]`. The 
 - [ ] Stripe account activated, branding set, receipts on
 - [ ] Payment Link for every product option, with shipping address, custom fields, and the thank-you redirect
 - [ ] Links added to `data/products.json`
-- [ ] Cloudflare Pages connected to the repo, with the domain attached
+- [ ] Domain added in HostGator cPanel, free SSL active
+- [ ] FTP account created; `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD` secrets (and `FTP_DIR` if needed) added in GitHub
+- [ ] "Build and deploy" ran with a green check in the GitHub Actions tab
 - [ ] Contact form service connected (or the email fallback tested)
 - [ ] Policies reviewed (ideally by an attorney); `policies_last_updated` set
 

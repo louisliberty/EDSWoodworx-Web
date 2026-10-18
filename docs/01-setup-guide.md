@@ -8,7 +8,9 @@ How the site works, and how to get it live. Written for a non-technical owner.
 GitHub repo (louisliberty/eds-woodworx)
    │  every change pushed to "main"
    ▼
-Hosting (Cloudflare Pages)  ── builds the site and serves edswoodworx.com, free
+GitHub Actions  ── builds the site and uploads it to HostGator (free)
+   ▼
+HostGator  ── serves edswoodworx.com (your existing plan)
    │  each product's "Buy now" button links to…
    ▼
 Stripe Payment Link  ── secure checkout: address, payment, engraving, gift message
@@ -17,13 +19,11 @@ Stripe Payment Link  ── secure checkout: address, payment, engraving, gift m
 edswoodworx.com/thank-you/
 ```
 
-Monthly cost: **$0**. You pay for the domain once a year, and Stripe's per-sale card fee.
+No new monthly cost: the site runs on your existing HostGator plan. You pay for the domain once a year, and Stripe's per-sale card fee.
 
 ## 1. Buy the domain
 
-You can buy edswoodworx.com anywhere. Simplest option: buy it from **Cloudflare Registrar** when you create your Cloudflare account (step 3). Then the domain and the hosting live in one account, and connecting them takes one click.
-
-If you buy it elsewhere (Namecheap, GoDaddy, Porkbun…), that works too. Cloudflare will show you two "nameserver" values to paste into that registrar's settings.
+Buy edswoodworx.com from any registrar, or from HostGator itself. If you buy it from HostGator, it's already pointed at your hosting. If you buy it elsewhere, set its nameservers to the ones HostGator gives you.
 
 ## 2. Set up Stripe
 
@@ -52,20 +52,31 @@ Each combination a customer can pick on the site (for example "Walnut / Chrome")
 
 Until a product option has a link, its button reads **"Ordering opens soon"**, so nothing can be bought by accident.
 
-## 3. Put the site online (Cloudflare Pages)
+## 3. Put the site online (HostGator)
 
-1. Create a free account at cloudflare.com.
-2. Go to **Workers & Pages → Create → Pages → Connect to Git**, and authorize GitHub for the `eds-woodworx` repository.
-3. Settings:
-   - Production branch: `main`
-   - Build command: `node build.mjs`
-   - Build output directory: `dist`
-4. **Save and Deploy.** In a minute or two the site is live at an address like `eds-woodworx.pages.dev`.
-5. **Custom domains → Set up a custom domain →** `edswoodworx.com` (and add `www.edswoodworx.com` too).
+The site is uploaded to HostGator automatically by GitHub every time a change is pushed to `main` (see `.github/workflows/deploy.yml`). Set it up once:
 
-From then on, every change pushed to `main` goes live automatically, usually within two minutes.
+**In HostGator (cPanel):**
+1. Add edswoodworx.com to your plan. If it's your plan's main domain, the site goes in `public_html`. If you add it as an **Addon Domain**, note the folder cPanel creates for it (for example `edswoodworx.com`).
+2. If you bought the domain somewhere else, point it at HostGator using the nameservers HostGator lists in your welcome email or cPanel.
+3. **SSL/TLS Status:** make sure the free certificate (AutoSSL) covers edswoodworx.com and www.edswoodworx.com.
+4. **FTP Accounts:** create an FTP account whose directory is the site's folder. Note the server name, the full username (it looks like `deploy@edswoodworx.com`), and the password.
 
-**Before launch:** keep the `pages.dev` address private, and don't connect the domain until the placeholders are filled in. Every build prints a list of remaining `[PLACEHOLDER]` spots.
+**In GitHub** (repo → **Settings → Secrets and variables → Actions**):
+1. Under **Secrets**, add:
+   - `FTP_SERVER`: the FTP server name from cPanel (often `ftp.edswoodworx.com`, or the server name in your HostGator welcome email)
+   - `FTP_USERNAME`: the full FTP username
+   - `FTP_PASSWORD`: the FTP password
+2. Under **Variables**, add `FTP_DIR` with the site folder relative to the FTP account's home, ending in `/`. If the FTP account's directory is already the site folder, use `./`. Without this variable it uploads to `./public_html/`.
+3. Go to the **Actions** tab → **Build and deploy** → **Run workflow**. In about a minute the site is on HostGator.
+
+Never paste these passwords into a chat or a file in the repo. GitHub Secrets keep them hidden, even from Claude.
+
+From then on, every change pushed to `main` goes live automatically, usually within two minutes. If a deploy fails, the Actions tab shows a red ✗ with the reason.
+
+**Before launch:** don't point the domain at HostGator until the placeholders are filled in. Every build prints a list of remaining `[PLACEHOLDER]` spots.
+
+**Alternative:** Cloudflare Pages (free) also works with this repo, with no FTP needed. Use build command `node build.mjs` and output directory `dist`. If you switch, delete the HostGator secrets so the upload step stops running.
 
 ## 4. Contact form
 

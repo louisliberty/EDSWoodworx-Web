@@ -497,7 +497,7 @@ function buildExtras() {
   const index = pages.filter((p) => p.search && !p.noindex && p.url !== '/404' && p.url !== '/search/').map((p) => ({ url: p.url, title: p.title || '', description: p.description || '', text: p.text || '', kind: p.kind || 'page' }));
   fs.writeFileSync(path.join(OUT, 'search-index.json'), JSON.stringify(index));
   fs.copyFileSync(path.join(ROOT, 'brand/eds-ring-mark.svg'), path.join(OUT, 'favicon.svg'));
-  for (const f of ['_headers', '_redirects']) if (fs.existsSync(path.join(ROOT, f))) fs.copyFileSync(path.join(ROOT, f), path.join(OUT, f));
+  for (const f of ['_headers', '_redirects', '.htaccess']) if (fs.existsSync(path.join(ROOT, f))) fs.copyFileSync(path.join(ROOT, f), path.join(OUT, f));
 }
 
 function copyDir(src, dst) {

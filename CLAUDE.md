@@ -1,6 +1,6 @@
 # Notes for Claude working on this repo
 
-Static site for EDS WoodWorx (edswoodworx.com). `node build.mjs` turns `data/` + `src/pages/` + `assets/` into `dist/`. Cloudflare Pages builds and deploys automatically on every push to `main`, so anything pushed to `main` goes live within minutes. No npm dependencies; keep it that way.
+Static site for EDS WoodWorx (edswoodworx.com). `node build.mjs` turns `data/` + `src/pages/` + `assets/` into `dist/`. GitHub Actions (`.github/workflows/deploy.yml`) builds and uploads `dist/` to HostGator by FTPS on every push to `main`, so anything pushed to `main` goes live within minutes. FTP credentials are GitHub secrets; never ask for or write them into files. No npm dependencies; keep it that way.
 
 The `shopify` branch holds a complete Shopify Online Store 2.0 theme for a future move to Shopify. Don't merge it into `main`.
 
@@ -39,4 +39,4 @@ The `shopify` branch holds a complete Shopify Online Store 2.0 theme for a futur
 
 Product prices exist in two places: Stripe (what's charged) and `data/products.json` (what's shown). Remind the owner to keep them in sync.
 
-Checkout, orders, shipping rates, receipts, refunds, and taxes are configured in the Stripe Dashboard, not here. Hosting and the domain are configured in Cloudflare.
+Checkout, orders, shipping rates, receipts, refunds, and taxes are configured in the Stripe Dashboard, not here. Hosting, the domain, SSL, and email accounts are configured in HostGator cPanel. Server behavior (https, 404, caching) is in `.htaccess`.

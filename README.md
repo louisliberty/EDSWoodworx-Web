@@ -2,7 +2,7 @@
 
 Website for [edswoodworx.com](https://edswoodworx.com): hand-turned pens, wooden bowls, and handmade cutting boards, made to order in Ed's workshop.
 
-It's a static site: free hosting, with checkout through Stripe Payment Links and no monthly platform fee. A full Shopify theme for later is saved on the `shopify` branch.
+It's a static site hosted on HostGator, with checkout through Stripe Payment Links and no monthly platform fee. A full Shopify theme for later is saved on the `shopify` branch.
 
 ## Where things live
 
@@ -29,4 +29,4 @@ No packages to install; it needs only Node 18 or newer.
 
 ## Hosting
 
-Cloudflare Pages, connected to this repo. Build command `node build.mjs`, output directory `dist`, production branch `main`. Pushing to `main` deploys the site. Setup steps are in `docs/01-setup-guide.md`.
+HostGator, deployed by GitHub Actions (`.github/workflows/deploy.yml`). Every push to `main` builds the site and uploads `dist/` by FTPS. FTP details are stored as repository secrets. Apache settings (https redirect, 404 page, caching) are in `.htaccess`. Setup steps are in `docs/01-setup-guide.md`.
