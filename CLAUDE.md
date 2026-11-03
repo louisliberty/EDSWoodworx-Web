@@ -35,7 +35,8 @@ The `shopify` branch holds a complete Shopify Online Store 2.0 theme for a futur
 | Category photo | `data/products.json` → category `image` (+ `image_alt`) |
 | FAQ | `data/faq.json` |
 | Page text | `src/pages/<page>.html`. Use `{{site.key}}` for values from site.json; components are `{{> name "arg"}}` (see `COMPONENTS` in `build.mjs`). |
-| Homepage/story photos | Replace `{{> placeholder "..."}}` in `src/pages/index.html` / `our-story.html` with an `<img>` inside `<div class="media media--portrait">`. |
+| Homepage/story photos | Replace `{{> placeholder "..."}}` in `src/pages/*.html` with `{{> image "/assets/images/<file>" "<alt text>" "portrait"}}` (ratio: square, portrait, landscape, wide). |
+| Ed's portrait | `assets/images/ed-portrait.svg` is an illustration drawn from a photo of Ed (hand-written SVG, editable). Used on the homepage and Our Story. The original photo is not in the repo. |
 
 Product prices exist in two places: Stripe (what's charged) and `data/products.json` (what's shown). Remind the owner to keep them in sync.
 

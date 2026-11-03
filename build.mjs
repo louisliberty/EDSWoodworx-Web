@@ -40,6 +40,9 @@ function priceLabel(p) {
 function imageSize(file) {
   try {
     const b = fs.readFileSync(path.join(ROOT, file.replace(/^\//, '')));
+    const head = b.toString('utf8', 0, 600);
+    const vb = head.startsWith('<svg') && head.match(/viewBox="[\d.\s-]*?\s([\d.]+)\s([\d.]+)"/);
+    if (vb) return { w: Math.round(+vb[1]), h: Math.round(+vb[2]) };
     if (b[0] === 0x89 && b.toString('ascii', 1, 4) === 'PNG') return { w: b.readUInt32BE(16), h: b.readUInt32BE(20) };
     if (b.toString('ascii', 0, 4) === 'RIFF' && b.toString('ascii', 8, 12) === 'WEBP') {
       const t = b.toString('ascii', 12, 16);
@@ -233,6 +236,7 @@ const COMPONENTS = {
   custom_request_form: customRequestForm,
   newsletter,
   placeholder: (label, ratio) => placeholder(label, ratio),
+  image: (src, alt, ratio) => img(src, alt, { ratio: ratio || 'square', sizes: '(min-width: 900px) 50vw, 100vw' }),
   icon: (name) => ICON[name] || '',
   hero_eyebrow: () => (site.usa_claim_confirmed ? 'Handcrafted in America' : 'Handcrafted in Ed&rsquo;s workshop'),
   email_link: () => (realEmail() ? `<a href="mailto:${esc(site.email)}">${esc(site.email)}</a>` : esc(site.email)),

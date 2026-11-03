@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img" aria-labelledby="t">
+  <title id="t">Illustrated portrait of Ed, smiling, in a tan cap, wire glasses, and a blue jacket</title>
+  <defs><clipPath id="panel"><rect width="800" height="1000"/></clipPath></defs>
+  <g clip-path="url(#panel)" stroke-linejoin="round" stroke-linecap="round">
+    <rect width="800" height="1000" fill="#EDE3D1"/>
+    <g fill="none" stroke="#DDCBAE" stroke-width="5">
+      <ellipse cx="385" cy="500" rx="170" ry="160"/>
+      <ellipse cx="378" cy="510" rx="275" ry="260"/>
+      <ellipse cx="370" cy="520" rx="385" ry="365"/>
+      <ellipse cx="362" cy="532" rx="500" ry="475"/>
+      <ellipse cx="355" cy="545" rx="620" ry="590"/>
+    </g>
+
+    <g transform="translate(400 1000) scale(1.13) translate(-400 -1000)">
+    <!-- jacket -->
+    <path d="M20 1000 C 40 880, 160 830, 290 812 L 510 812 C 640 830, 760 880, 780 1000 Z" fill="#2E86C1" stroke="#2A1D14" stroke-width="8"/>
+    <path d="M150 1000 C 160 930, 175 890, 200 860 M650 1000 C 640 930, 625 890, 600 860" fill="none" stroke="#1F5F8B" stroke-width="7"/>
+    <!-- neck (short) + chain -->
+    <path d="M300 740 L 296 830 C 350 900, 450 900, 504 830 L 500 740 Z" fill="#C98A64" stroke="#2A1D14" stroke-width="7"/>
+    <path d="M318 832 C 360 872, 440 872, 482 832" fill="none" stroke="#D8D0C0" stroke-width="3.5" stroke-dasharray="1 7"/>
+    <!-- collar -->
+    <path d="M290 806 L 228 920 L 352 872 Z" fill="#45A8E2" stroke="#2A1D14" stroke-width="7"/>
+    <path d="M510 806 L 572 920 L 448 872 Z" fill="#45A8E2" stroke="#2A1D14" stroke-width="7"/>
+
+    <!-- ears -->
+    <ellipse cx="186" cy="560" rx="32" ry="54" fill="#D69A73" stroke="#2A1D14" stroke-width="6"/>
+    <path d="M194 536 C 180 550, 180 574, 196 586" fill="none" stroke="#B0744F" stroke-width="5"/>
+    <ellipse cx="614" cy="560" rx="32" ry="54" fill="#D69A73" stroke="#2A1D14" stroke-width="6"/>
+    <path d="M606 536 C 620 550, 620 574, 604 586" fill="none" stroke="#B0744F" stroke-width="5"/>
+
+    <!-- gray hair poking out under the cap -->
+    <path d="M166 548 C 136 528, 134 494, 158 484 C 136 462, 154 430, 186 436 C 186 408, 222 398, 240 420 C 252 404, 276 410, 274 432 L 250 530 C 226 548, 192 556, 166 548 Z" fill="#DCD7CF" stroke="#2A1D14" stroke-width="6"/>
+    <path d="M634 548 C 664 528, 666 494, 642 484 C 664 462, 646 430, 614 436 C 614 408, 578 398, 560 420 C 548 404, 524 410, 526 432 L 550 530 C 574 548, 608 556, 634 548 Z" fill="#DCD7CF" stroke="#2A1D14" stroke-width="6"/>
+    <path d="M170 500 C 184 506, 194 516, 198 530 M196 452 C 210 462, 220 476, 222 494 M630 500 C 616 506, 606 516, 602 530 M604 452 C 590 462, 580 476, 578 494" fill="none" stroke="#A9A39A" stroke-width="4"/>
+
+    <!-- face: broad and round -->
+    <path d="M210 440 C 196 560, 204 690, 270 762 C 320 818, 480 818, 530 762 C 596 690, 604 560, 590 440 C 520 410, 280 410, 210 440 Z" fill="#DDA27B" stroke="#2A1D14" stroke-width="8"/>
+    <path d="M528 440 C 578 500, 588 620, 548 710 C 528 752, 490 784, 450 798 C 540 780, 592 690, 594 560 C 595 500, 580 460, 528 440 Z" fill="#C88A63"/>
+    <path d="M232 690 C 250 740, 280 770, 320 790" fill="none" stroke="#C88A63" stroke-width="10"/>
+    <ellipse cx="275" cy="640" rx="46" ry="28" fill="#E3897A" opacity=".5"/>
+    <ellipse cx="525" cy="640" rx="46" ry="28" fill="#E3897A" opacity=".5"/>
+
+    <!-- cap: low profile, sits on the forehead -->
+    <path d="M198 438 C 196 330, 280 254, 400 250 C 520 254, 604 330, 602 438 C 520 414, 280 414, 198 438 Z" fill="#B7A285" stroke="#2A1D14" stroke-width="8"/>
+    <path d="M400 252 C 396 310, 396 360, 400 416" fill="none" stroke="#917D63" stroke-width="5"/>
+    
+    <circle cx="400" cy="252" r="12" fill="#B7A285" stroke="#2A1D14" stroke-width="5"/>
+    
+    <!-- brim: curved bill toward the viewer -->
+    <path d="M188 436 C 250 394, 550 394, 612 436 C 618 460, 600 486, 562 490 C 482 504, 318 504, 238 490 C 200 486, 182 460, 188 436 Z" fill="#A58F6D" stroke="#2A1D14" stroke-width="8"/>
+    <path d="M214 466 C 300 488, 500 488, 586 466" fill="none" stroke="#8B7656" stroke-width="5"/>
+    <path d="M250 492 C 330 506, 470 506, 550 492 C 520 500, 470 506, 400 506 C 330 506, 280 500, 250 492 Z" fill="#6F5B42"/>
+
+    <!-- eyebrows: thick, gray-brown -->
+    <path d="M256 510 C 284 494, 330 490, 364 502" fill="none" stroke="#5E564D" stroke-width="16"/>
+    <path d="M436 502 C 470 490, 516 494, 544 510" fill="none" stroke="#5E564D" stroke-width="16"/>
+
+    <!-- smiling, squinting eyes -->
+    <path d="M276 562 C 298 540, 334 540, 356 562" fill="none" stroke="#2A1D14" stroke-width="8"/>
+    <path d="M444 562 C 466 540, 502 540, 524 562" fill="none" stroke="#2A1D14" stroke-width="8"/>
+    <path d="M286 580 C 300 590, 316 592, 330 588 M470 588 C 484 592, 500 590, 514 580" fill="none" stroke="#B0744F" stroke-width="4"/>
+
+    <!-- wire glasses: wide, thin, slightly rounded rectangles -->
+    <g fill="#FFFFFF" fill-opacity=".12" stroke="#50555C" stroke-width="6">
+      <path d="M236 520 C 236 510, 244 506, 254 506 L 372 510 C 384 510, 390 518, 388 530 L 382 584 C 380 596, 372 602, 360 602 L 262 600 C 248 600, 240 592, 240 580 Z"/>
+      <path d="M564 520 C 564 510, 556 506, 546 506 L 428 510 C 416 510, 410 518, 412 530 L 418 584 C 420 596, 428 602, 440 602 L 538 600 C 552 600, 560 592, 560 580 Z"/>
+    </g>
+    <path d="M388 534 C 394 524, 406 524, 412 534" fill="none" stroke="#50555C" stroke-width="6"/>
+    <path d="M238 524 L 200 512 M562 524 L 600 512" fill="none" stroke="#50555C" stroke-width="6"/>
+    <path d="M258 520 L 290 521 M434 522 L 466 522" stroke="#FFFFFF" stroke-width="5" opacity=".8"/>
+
+    <!-- nose: broad, rounded -->
+    <path d="M396 560 C 390 596, 380 620, 368 640 C 352 664, 368 690, 392 684 C 400 692, 412 692, 420 684 C 444 690, 456 664, 440 640" fill="#D29570" stroke="#2A1D14" stroke-width="7"/>
+    <path d="M378 676 C 384 668, 392 666, 398 670 M414 670 C 420 666, 428 668, 434 676" fill="none" stroke="#8E573A" stroke-width="5"/>
+
+    <!-- wide smile, upper teeth -->
+    <path d="M292 712 C 340 772, 460 772, 508 712 C 452 728, 348 728, 292 712 Z" fill="#7A2E28" stroke="#2A1D14" stroke-width="7"/>
+    <path d="M306 717 C 356 732, 444 732, 494 717 C 490 732, 476 742, 460 744 C 420 750, 380 750, 340 744 C 324 742, 310 732, 306 717 Z" fill="#FBF6EC"/>
+    <path d="M356 733 L 356 746 M400 735 L 400 749 M444 733 L 444 746" stroke="#D8CFC0" stroke-width="3"/>
+    <path d="M282 702 C 288 710, 292 716, 294 722 M518 702 C 512 710, 508 716, 506 722" fill="none" stroke="#2A1D14" stroke-width="6"/>
+    <path d="M300 660 C 280 686, 276 718, 290 744 M500 660 C 520 686, 524 718, 510 744" fill="none" stroke="#B0744F" stroke-width="5"/>
+    </g>
+  </g>
+  <rect x="7" y="7" width="786" height="986" fill="none" stroke="#2A1D14" stroke-width="14"/>
+</svg>
