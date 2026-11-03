@@ -67,7 +67,7 @@ The site is uploaded to HostGator automatically by GitHub every time a change is
    - `FTP_SERVER`: the FTP server name from cPanel (often `ftp.edswoodworx.com`, or the server name in your HostGator welcome email)
    - `FTP_USERNAME`: the full FTP username
    - `FTP_PASSWORD`: the FTP password
-2. Under **Variables**, add `FTP_DIR` with the site folder relative to the FTP account's home, ending in `/`. If the FTP account's directory is already the site folder, use `./`. Without this variable it uploads to `./public_html/`.
+2. Optional: the upload goes into the FTP account's own folder, so make that the site's folder (step 4 above) and nothing else is needed. Only if the FTP account starts somewhere else, add a **Variable** `FTP_DIR` with the site folder relative to it, ending in `/` (for example `./edswoodworx.com/`).
 3. Go to the **Actions** tab → **Build and deploy** → **Run workflow**. In about a minute the site is on HostGator.
 
 Never paste these passwords into a chat or a file in the repo. GitHub Secrets keep them hidden, even from Claude.

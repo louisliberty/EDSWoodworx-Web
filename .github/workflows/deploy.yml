@@ -4,7 +4,7 @@
 #   FTP_USERNAME  the FTP account's full username
 #   FTP_PASSWORD  the FTP account's password
 # Optional repository variable FTP_DIR: folder for the site on the server
-#   (default ./public_html/ ; for an add-on domain use its folder, e.g. ./edswoodworx.com/)
+#   (default ./ = the FTP account's own folder, which should be the site's folder)
 # Until FTP_SERVER is set, the workflow builds the site and skips the upload.
 
 name: Build and deploy
@@ -47,7 +47,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
           local-dir: ./dist/
-          server-dir: ${{ vars.FTP_DIR || './public_html/' }}
+          server-dir: ${{ vars.FTP_DIR || './' }}
           exclude: |
             **/.git*
             **/.git*/**
