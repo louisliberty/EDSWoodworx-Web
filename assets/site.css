@@ -48,7 +48,13 @@
 
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { font-size: 112.5%; -webkit-text-size-adjust: 100%; scroll-padding-top: 6rem; }
+html { font-size: 112.5%; -webkit-text-size-adjust: 100%; }
+/* Keep jump-link targets clear of the sticky header. (Not scroll-padding on html: Chrome applies that
+   when restoring the scroll position on refresh, so the page crept a few pixels on every reload.) */
+:target { scroll-margin-top: 6.5rem; }
+/* Chrome's scroll anchoring restored the position a few pixels off on every refresh (it rounds
+   fractional layout sizes). Every image here reserves its space, so anchoring isn't needed. */
+html, body { overflow-anchor: none; }
 body {
   margin: 0;
   font-family: var(--font-body, system-ui, sans-serif);
