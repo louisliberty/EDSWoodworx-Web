@@ -5,7 +5,7 @@ How the site works, and how to get it live. Written for a non-technical owner.
 ## How the pieces fit together
 
 ```
-GitHub repo (louisliberty/eds-woodworx)
+GitHub repo (louisliberty/EDSWoodworx-Web)
    │  every change pushed to "main"
    ▼
 GitHub Actions  ── builds the site and uploads it to HostGator (free)
