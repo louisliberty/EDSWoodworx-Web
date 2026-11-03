@@ -134,7 +134,7 @@ const productGrid = (list, extra = '') =>
 const byFeatured = (a, b) => (a.featured || 999) - (b.featured || 999);
 
 function categoryTiles() {
-  return `<ul class="grid grid--3" role="list">${categories.map((c) => `<li><a class="category-tile" href="${categoryUrl(c)}">
+  return `<ul class="grid ${categories.length === 4 ? 'grid--4' : 'grid--3'}" role="list">${categories.map((c) => `<li><a class="category-tile" href="${categoryUrl(c)}">
     ${c.image ? img(c.image, '', { ratio: 'portrait', decorative: true, sizes: '(min-width: 750px) 33vw, 100vw' }) : placeholder(c.placeholder || c.title, 'portrait')}
     <h3>${esc(c.title)}</h3><p>${esc(c.tile_text)}</p><span class="category-tile__cta">Shop ${esc(c.title.toLowerCase())}</span></a></li>`).join('')}</ul>`;
 }
